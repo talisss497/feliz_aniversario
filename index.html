@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Aniversário! 🎂✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #13112b;
+      --bg-mid: #271b4d;
+      --bg-accent: #3d246c;
+      --gold-light: #ffe066;
+      --gold-main: #f5b700;
+      --gold-dark: #c98a00;
+      --coral-light: #ff8066;
+      --coral-main: #ff5252;
+      --coral-dark: #d63031;
+      --white: #ffffff;
+      --text-dark: #221c35;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at 50% 25%, var(--bg-accent) 0%, var(--bg-mid) 52%, var(--bg-deep) 100%);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      user-select: none;
+      padding: 20px;
+    }
+
+    /* Fundo estrelado suave */
+    .stars-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      background: var(--gold-light);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: twinkle ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      100% { opacity: 0.95; transform: scale(1.25); }
+    }
+
+    /* Botão discreto de controle de som */
+    .music-toggle {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--gold-main);
+      color: var(--gold-light);
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      z-index: 200;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .music-toggle:hover {
+      transform: scale(1.08);
+      background: rgba(245, 183, 0, 0.25);
+    }
+
+    /* Cabeçalho */
+    h1 {
+      font-family: 'Fredoka', sans-serif;
+      background: linear-gradient(180deg, #fff5cc 0%, var(--gold-light) 45%, var(--gold-main) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: clamp(2.1rem, 6.5vw, 3rem);
+      text-align: center;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 4px 12px rgba(245, 183, 0, 0.35));
+      z-index: 10;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 52px;
+      color: #f4ebff;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      padding: 8px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 224, 102, 0.35);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    /* Caixa de Presente 3D Estilizada */
+    .gift-stage {
+      perspective: 900px;
+      z-index: 10;
+      margin-top: 25px;
+    }
+
+    .gift-container {
+      position: relative;
+      width: 210px;
+      height: 210px;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .gift-container:hover {
+      transform: scale(1.05) rotateY(-6deg);
+    }
+
+    /* Tampa da Caixa */
+    .lid {
+      position: absolute;
+      width: 230px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--coral-light) 0%, var(--coral-main) 60%, var(--coral-dark) 100%);
+      left: -10px;
+      top: 34px;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+      z-index: 4;
+      transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55), top 0.7s ease;
+    }
+
+    /* Fita dourada na tampa */
+    .lid::after {
+      content: '';
+      position: absolute;
+      width: 36px;
+      height: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+    }
+
+    /* Laço dourado volumoso no topo */
+    .gold-bow {
+      position: absolute;
+      top: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 40px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .bow-loop-left, .bow-loop-right {
+      position: absolute;
+      width: 48px;
+      height: 36px;
+      border: 8px solid var(--gold-main);
+      background: radial-gradient(circle, var(--gold-light), var(--gold-dark));
+      border-radius: 50% 50% 10% 50%;
+      top: 2px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .bow-loop-left {
+      left: 6px;
+      transform: rotate(-18deg);
+    }
+
+    .bow-loop-right {
+      right: 6px;
+      border-radius: 50% 50% 50% 10%;
+      transform: rotate(18deg);
+    }
+
+    .bow-knot {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      border-radius: 50%;
+      left: 50%;
+      top: 12px;
+      transform: translateX(-50%);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+      z-index: 6;
+    }
+
+    /* Corpo da Caixa 3D */
+    .box {
+      position: absolute;
+      width: 210px;
+      height: 136px;
+      background: linear-gradient(145deg, var(--coral-main) 0%, var(--coral-dark) 100%);
+      bottom: 0;
+      border-radius: 0 0 18px 18px;
+      box-shadow:
+        0 18px 35px rgba(0, 0, 0, 0.45),
+        inset 0 -10px 20px rgba(0, 0, 0, 0.2),
+        inset 6px 0 12px rgba(255, 255, 255, 0.15);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Fita vertical dourada no corpo da caixa */
+    .box::before {
+      content: '';
+      position: absolute;
+      width: 36px;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Etiqueta central */
+    .badge {
+      background: var(--white);
+      color: var(--bg-deep);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 7px 16px;
+      border-radius: 22px;
+      z-index: 5;
+      border: 2px solid var(--gold-main);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Surpresa interna que emerge ao abrir */
+    .surprise-items {
+      position: absolute;
+      top: 48px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+      transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 295px;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .surprise-icons {
+      font-size: 2.6rem;
+      letter-spacing: 8px;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+    }
+
+    .surprise-text {
+      background: rgba(255, 255, 255, 0.96);
+      border: 2.5px solid var(--gold-main);
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      line-height: 1.4;
+    }
+
+    /* Estado Aberto */
+    .gift-container.open .lid {
+      top: -68px;
+      transform: rotate(-20deg) translateX(-22px);
+    }
+
+    .gift-container.open .surprise-items {
+      top: -128px;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* Botão do Álbum */
+    .open-album-btn {
+      margin-top: 34px;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-main) 100%);
+      color: var(--bg-deep);
+      border: 2px solid var(--white);
+      padding: 14px 30px;
+      border-radius: 34px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(245, 183, 0, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(15px);
+      transition: all 0.4s ease;
+      z-index: 10;
+    }
+
+    .open-album-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .open-album-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 28px rgba(245, 183, 0, 0.6);
+    }
+
+    /* Modal Elegante do Álbum */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 10, 29, 0.78);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .album-card {
+      background: linear-gradient(180deg, #ffffff 0%, #faf6ff 100%);
+      color: var(--text-dark);
+      width: 100%;
+      max-width: 440px;
+      border-radius: 28px;
+      padding: 26px 20px;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+      position: relative;
+      text-align: center;
+      border: 3.5px solid var(--gold-main);
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.active .album-card {
+      transform: scale(1);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: #f0eaf8;
+      border: 1.5px solid #d8c8ec;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      color: var(--bg-mid);
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .close-modal:hover {
+      background: #e2d4f5;
+    }
+
+    .album-title {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--bg-mid);
+      font-size: 1.65rem;
+      margin-bottom: 4px;
+    }
+
+    .album-hint {
+      font-size: 0.82rem;
+      color: #6b5e7a;
+      margin-bottom: 18px;
+    }
+
+    /* Grade de 3 Cartões para as 3 fases */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .photo-slot {
+      aspect-ratio: 3 / 4;
+      background: linear-gradient(145deg, #271b4d, #3d246c);
+      border: 2.5px dashed var(--gold-main);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      padding: 6px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .photo-slot:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(61, 36, 108, 0.3);
+    }
+
+    .photo-slot .lock-icon {
+      font-size: 1.7rem;
+      margin-bottom: 6px;
+    }
+
+    .photo-slot .lock-text {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      line-height: 1.2;
+    }
+
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      border-radius: 12px;
+    }
+
+    .photo-slot.unlocked {
+      border-style: solid;
+      border-color: var(--gold-main);
+      padding: 0;
+      background: #000;
+    }
+
+    .photo-slot.unlocked .lock-icon,
+    .photo-slot.unlocked .lock-text {
+      display: none;
+    }
+
+    .photo-slot.unlocked img {
+      display: block;
+      animation: fadeZoomIn 0.45s ease;
+    }
+
+    @keyframes fadeZoomIn {
+      from { opacity: 0; transform: scale(1.1); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Caixa de Mensagem */
+    .message-box {
+      background: #f5effc;
+      border-radius: 16px;
+      padding: 14px 16px;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      font-weight: 500;
+      margin-bottom: 16px;
+      border: 1.5px solid #decff2;
+      line-height: 1.45;
+    }
+
+    /* Botão Chuva de Confetes e Balões */
+    .celebrate-btn {
+      background: linear-gradient(135deg, var(--coral-main) 0%, var(--coral-dark) 100%);
+      color: var(--white);
+      border: none;
+      padding: 13px 20px;
+      border-radius: 28px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 6px 18px rgba(255, 82, 82, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .celebrate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(255, 82, 82, 0.52);
+    }
+
+    /* Elementos Flutuantes (Balões e Confetes) */
+    .floating-balloon {
+      position: fixed;
+      bottom: -60px;
+      pointer-events: none;
+      z-index: 160;
+      animation: floatUp linear forwards;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(-6deg); opacity: 1; }
+      50% { transform: translateY(-55vh) rotate(8deg); }
+      100% { transform: translateY(-118vh) rotate(-10deg); opacity: 0; }
+    }
+
+    .confetti-piece {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 16px;
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 160;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotateX(0deg) rotateZ(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotateX(360deg) rotateZ(540deg); opacity: 0.2; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Camada de estrelas -->
+  <div class="stars-layer" id="starsLayer"></div>
+
+  <!-- Botão discreto de som -->
+  <button class="music-toggle" id="musicBtn" onclick="toggleMusic()" title="Ativar/Desativar Música">🔇</button>
+
+  <h1>Feliz Aniversário! 🎂✨</h1>
+  <p class="subtitle" id="instructionText">Toque na caixa de presente para abrir sua surpresa</p>
+
+  <!-- Caixa de Presente 3D -->
+  <div class="gift-stage">
+    <div class="gift-container" id="giftBox" onclick="toggleGift()">
+      <div class="lid">
+        <div class="gold-bow">
+          <div class="bow-loop-left"></div>
+          <div class="bow-loop-right"></div>
+          <div class="bow-knot"></div>
+        </div>
+      </div>
+
+      <div class="surprise-items">
+        <div class="surprise-icons">🎂🎈🎁</div>
+        <div class="surprise-text">Que seu novo ciclo seja repleto de alegrias, conquistas e momentos inesquecíveis! 🎉</div>
+      </div>
+
+      <div class="box">
+        <span class="badge">Abrir Presente ✨</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botão para abrir o álbum -->
+  <button class="open-album-btn" id="openAlbumBtn" onclick="openAlbum()">
+    📸 Abrir Álbum de Memórias
+  </button>
+
+  <!-- Modal do Álbum -->
+  <div class="modal-overlay" id="albumModal" onclick="handleOverlayClick(event)">
+    <div class="album-card">
+      <button class="close-modal" onclick="closeAlbum()" title="Fechar">✕</button>
+      <h2 class="album-title">Álbum de Memórias ✨</h2>
+      <p class="album-hint">Toque em cada cartão para revelar uma lembrança</p>
+
+      <div class="photo-grid" id="photoGrid"></div>
+
+      <div class="message-box" id="messageBox">
+        Escolha uma das lembranças acima para ler sua mensagem 🎂
+      </div>
+
+      <button class="celebrate-btn" onclick="triggerCelebration()">
+        🎉 Chuva de Confetes e Balões
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // CONFIGURAÇÃO DAS 3 FOTOS E MENSAGENS DE ANIVERSÁRIO:
+    // Ao hospedar no GitHub, coloque as 3 fotos na mesma pasta deste arquivo
+    // e mantenha os nomes abaixo (ou ajuste para foto1.jpg, foto2.jpg, foto3.jpg)
+    // =========================================================================
+    const memories = [
+      {
+        label: "🌸",
+        // Substitua pelo nome do seu arquivo local (ex: "foto1.jpg") ao subir no GitHub
+        img: "330860557_1399523220451739_7910091348306065116_n.jpg",
+        fallback: "https://placehold.co/400x530/3d246c/ffe066?text=Foto+1%0AInfancia",
+        text: "1. Esse sorriso doce é a coisa mais linda do mundo. 🌸✨"
+      },
+      {
+        label: "🎓",
+        img: "350679910_1826102777784589_2628848267705472001_n.jpg",
+        fallback: "https://placehold.co/400x530/271b4d/ffe066?text=Foto+2%0AFormatura+2015",
+        text: "2. Coisa linda!!!!!! 🎓🌟"
+      },
+      {
+        label: "🎧",
+        img: "287813261_1575727506155452_8820832644059977379_n (1).jpg",
+        fallback: "https://placehold.co/400x530/ff5252/ffffff?text=Foto+3%0ANossos+Momentos",
+        text: "3. Feliz aniversário, muitas felicidades sempre, te amo sz!! 🎂❤️"
+      }
+    ];
+
+    let isOpen = false;
+    let isPlaying = false;
+    let audioCtx = null;
+    let melodyTimer = null;
+    let noteIndex = 0;
+
+    const giftBox = document.getElementById('giftBox');
+    const openAlbumBtn = document.getElementById('openAlbumBtn');
+    const instructionText = document.getElementById('instructionText');
+    const albumModal = document.getElementById('albumModal');
+    const photoGrid = document.getElementById('photoGrid');
+    const messageBox = document.getElementById('messageBox');
+    const musicBtn = document.getElementById('musicBtn');
+
+    // Cria estrelas suaves no fundo
+    function initStars() {
+      const starsLayer = document.getElementById('starsLayer');
+      for (let i = 0; i < 45; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 1.5;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.animationDuration = (Math.random() * 2 + 1.2) + 's';
+        star.style.animationDelay = (Math.random() * 2) + 's';
+        starsLayer.appendChild(star);
+      }
+    }
+
+    // Melodia completa de "Parabéns pra Você" (Web Audio API)
+    const happyBirthdayNotes = [
+      // Parabéns pra você (1)
+      { freq: 261.63, dur: 0.32 }, // C4
+      { freq: 261.63, dur: 0.22 }, // C4
+      { freq: 293.66, dur: 0.52 }, // D4
+      { freq: 261.63, dur: 0.52 }, // C4
+      { freq: 349.23, dur: 0.52 }, // F4
+      { freq: 329.63, dur: 0.95 }, // E4
+
+      // Nesta data querida (2)
+      { freq: 261.63, dur: 0.32 }, // C4
+      { freq: 261.63, dur: 0.22 }, // C4
+      { freq: 293.66, dur: 0.52 }, // D4
+      { freq: 261.63, dur: 0.52 }, // C4
+      { freq: 392.00, dur: 0.52 }, // G4
+      { freq: 349.23, dur: 0.95 }, // F4
+
+      // Muitas felicidades (3)
+      { freq: 261.63, dur: 0.32 }, // C4
+      { freq: 261.63, dur: 0.22 }, // C4
+      { freq: 523.25, dur: 0.52 }, // C5
+      { freq: 440.00, dur: 0.52 }, // A4
+      { freq: 349.23, dur: 0.52 }, // F4
+      { freq: 329.63, dur: 0.52 }, // E4
+      { freq: 293.66, dur: 0.95 }, // D4
+
+      // Muitos anos de vida (4)
+      { freq: 466.16, dur: 0.32 }, // Bb4
+      { freq: 466.16, dur: 0.22 }, // Bb4
+      { freq: 440.00, dur: 0.52 }, // A4
+      { freq: 349.23, dur: 0.52 }, // F4
+      { freq: 392.00, dur: 0.52 }, // G4
+      { freq: 349.23, dur: 1.25 }  // F4
+    ];
+
+    function playNote(freq, duration) {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+      gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.16, audioCtx.currentTime + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration + 0.15);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration + 0.18);
+    }
+
+    function startMelody() {
+      if (isPlaying) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        isPlaying = true;
+        musicBtn.textContent = '🔊';
+
+        const step = () => {
+          if (!isPlaying) return;
+          const note = happyBirthdayNotes[noteIndex % happyBirthdayNotes.length];
+          playNote(note.freq, note.dur);
+          noteIndex++;
+          melodyTimer = setTimeout(step, note.dur * 1000);
+        };
+        step();
+      } catch (err) {
+        console.error("Erro ao iniciar áudio:", err);
+      }
+    }
+
+    function stopMelody() {
+      isPlaying = false;
+      musicBtn.textContent = '🔇';
+      if (melodyTimer) {
+        clearTimeout(melodyTimer);
+        melodyTimer = null;
+      }
+    }
+
+    function toggleMusic() {
+      if (isPlaying) {
+        stopMelody();
+      } else {
+        startMelody();
+      }
+    }
+
+    // Gera os 3 cartões do álbum
+    memories.forEach((item, index) => {
+      const slot = document.createElement('div');
+      slot.className = 'photo-slot';
+      slot.innerHTML = `
+        <span class="lock-icon">🎁</span>
+        <span class="lock-text">${item.label}</span>
+        <img src="${item.img}" alt="${item.label}" onerror="this.onerror=null; this.src='${item.fallback}';">
+      `;
+      slot.onclick = () => {
+        slot.classList.add('unlocked');
+        messageBox.textContent = item.text;
+        spawnConfetti(22);
+      };
+      photoGrid.appendChild(slot);
+    });
+
+    function toggleGift() {
+      isOpen = !isOpen;
+      if (isOpen) {
+        giftBox.classList.add('open');
+        openAlbumBtn.classList.add('visible');
+        instructionText.textContent = "Parabéns! Clique abaixo para ver suas lembranças 👇";
+        triggerCelebration();
+        if (!isPlaying) {
+          startMelody();
+        }
+      } else {
+        giftBox.classList.remove('open');
+        openAlbumBtn.classList.remove('visible');
+        instructionText.textContent = "Toque na caixa de presente para abrir sua surpresa";
+      }
+    }
+
+    function openAlbum() {
+      albumModal.classList.add('active');
+    }
+
+    function closeAlbum() {
+      albumModal.classList.remove('active');
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === albumModal) {
+        closeAlbum();
+      }
+    }
+
+    // Dispara balões e confetes juntos
+    function triggerCelebration() {
+      spawnBalloons(14);
+      spawnConfetti(45);
+    }
+
+    function spawnBalloons(count) {
+      const balloons = ['🎈', '✨', '🎂', '🎉', '🎊'];
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = 'floating-balloon';
+          el.textContent = balloons[Math.floor(Math.random() * balloons.length)];
+          el.style.left = Math.random() * 92 + 'vw';
+          el.style.animationDuration = (Math.random() * 2 + 2.8) + 's';
+          el.style.fontSize = (Math.random() * 1.1 + 1.6) + 'rem';
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 5000);
+        }, i * 110);
+      }
+    }
+
+    function spawnConfetti(count) {
+      const colors = ['#ffe066', '#f5b700', '#ff5252', '#ff8066', '#a29bfe', '#55efc4', '#ffffff'];
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const conf = document.createElement('div');
+          conf.className = 'confetti-piece';
+          conf.style.left = Math.random() * 98 + 'vw';
+          conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          conf.style.animationDuration = (Math.random() * 1.8 + 2.2) + 's';
+          conf.style.width = (Math.random() * 6 + 6) + 'px';
+          conf.style.height = (Math.random() * 8 + 10) + 'px';
+          document.body.appendChild(conf);
+          setTimeout(() => conf.remove(), 4200);
+        }, i * 35);
+      }
+    }
+
+    window.onload = function () {
+      initStars();
+    };
+  </script>
+</body>
+</html>
